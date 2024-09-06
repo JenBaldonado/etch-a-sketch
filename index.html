@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">Customize the grid</button>
+    <div id="gridCont"></div>
+    <script>
+        const gridContainer = document.getElementById("gridCont")
+        const button = document.getElementById('btn')
+
+        function getRandomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r} , ${g} , ${b})`
+        }
+
+        button.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            let popUp = prompt('Enter the number of grid items you want to create (1 to 100):', '16')
+            let numberOfItems;
+
+            while (popUp !== null && !isFinite(popUp) || popUp <= 0 || popUp > 100) {
+                popUp = prompt('Please enter a number between 1 and 100:')
+            }
+
+            if (popUp !== null) {
+                numberOfItems = parseInt(popUp, 10);
+                gridContainer.innerHTML = '';
+
+                const gridSize = Math.sqrt(numberOfItems);
+
+                for (i = 0; i < numberOfItems; i++) {
+                    const grid = document.createElement('div');
+                    grid.classList.add("grid");
+                    grid.style.opacity = 1;
+
+                    const gridSize = Math.sqrt(numberOfItems);
+                    grid.style.width = `calc(100% / ${gridSize})`;
+                    grid.style.height = `calc(100% / ${gridSize})`;
+
+                    grid.addEventListener('mouseover', () => {
+                        if (!grid.dataset.interactions) {
+                            grid.dataset.interactions = 0;
+                        }
+
+                        const interactions = parseInt(grid.dataset.interactions, 10);
+
+                        grid.style.backgroundColor = getRandomColor();
+
+                        const newOpacity = 1 - (interactions * 0.1);
+                        grid.style.opacity = newOpacity > 0 ? newOpacity : 0;
+
+                        grid.dataset.interactions = interactions + 1;
+                    })
+
+                    /* let pos = (i + 1) % 2 === 0;
+                    console.log(`i: ${i}, pos: ${pos}`);
+                    if (pos) {
+                        grid.addEventListener('mouseover', () => {
+                            grid.style.backgroundColor = '#DE3163';
+                        })
+                    } else {
+                        grid.addEventListener('mouseover', () => {
+                            grid.style.backgroundColor = '#7CB9E8';
+                        })
+                    }
+    
+                    grid.addEventListener('mouseout', () => {
+                        grid.style.backgroundColor = 'white';
+                    })*/
+
+                    gridContainer.appendChild(grid)
+                }
+
+            }
+        })
+
+        function defaultGrid() {
+            for (i = 0; i < 256; i++) {
+                const grid = document.createElement('div');
+                grid.classList.add("grid");
+
+                grid.style.width = `calc(100% / 16)`;
+                grid.style.height = `calc(100% / 16)`;
+
+                let pos = (i + 1) % 2 === 0;
+                console.log(`i: ${i}, pos: ${pos}`);
+                if (pos) {
+                    grid.addEventListener('mouseover', () => {
+                        grid.style.backgroundColor = '#DE3163';
+                    })
+                } else {
+                    grid.addEventListener('mouseover', () => {
+                        grid.style.backgroundColor = '#7CB9E8';
+                    })
+                }
+
+                grid.addEventListener('mouseout', () => {
+                    grid.style.backgroundColor = 'white';
+                })
+
+                gridContainer.appendChild(grid)
+            }
+        }
+
+        defaultGrid()
+
+    </script>
+
+</body>
+
+</html>

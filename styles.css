@@ -1,0 +1,28 @@
+.grid{
+    border: 1px solid black;
+    width: calc(100% / 16);
+    aspect-ratio: 1;
+    box-sizing: border-box;
+}
+
+
+#gridCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5% auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width:960px;
+
+}
+
+#btn{
+    display: flex;
+    margin: 100px auto 0px  auto;
+    background-color: bisque;
+    border-radius: 5px;
+    border: 1px solid rgb(61, 61, 90);
+    padding: 20px;
+    font-size:28px;
+}
